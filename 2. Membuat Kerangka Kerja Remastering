@@ -1,0 +1,27 @@
+#!/bin/bash
+########################################################################3
+# XENTA REMASTERING SCRIPT
+# CREATED   : EKO SAPUTRA (EVSYSTEM)
+# DEV       : XENTA OS http://www.xentaos.org/
+# LICENSE   : GNU GPL 3.0
+# WEBSITE   : https://evsystemsite.wordpress.com
+########################################################################
+# Mendownload Sistem Operasi http://www.xentaos.org/
+# Membuat Folder Kerja 
+  mkdir ~/livecdtmp
+# Pindah Ke Directory Kerja
+  cd ~/livecdtmp
+# Membuat Directory extract-cd dan mnt
+  mkdir extract-cd mnt
+# Mount Iso Linux yang mau di remastering
+  sudo mount -o loop ~/INSERT-NAME-HERE.iso mnt
+# Rsync filesystem.squashfsh
+  sudo rsync --exclude=/casper/filesystem.squashfs -a mnt/ extract-cd
+# Mengextract filesystem.squashfs
+  sudo unsquashfs mnt/casper/filesystem.squashfs
+# Ganti nama directory squashfs-root ke edit
+  sudo mv squashfs-root edit
+# Mengopy configuration resolv.conf ke edit/etc
+  sudo cp /etc/resolv.conf edit/etc/
+
+

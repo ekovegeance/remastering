@@ -1,0 +1,16 @@
+#!/bin/bash
+########################################################################3
+# XENTA REMASTERING SCRIPT
+# CREATED   : EKO SAPUTRA (EVSYSTEM)
+# DEV       : XENTA OS http://www.xentaos.org/
+# LICENSE   : GNU GPL 3.0
+# WEBSITE   : https://evsystemsite.wordpress.com
+########################################################################
+# Mengisntall Aplikasi
+  sudo apt-get install nama-aplikasi 
+# Menginstall Aplikasi Manual Dari Paket.deb
+  letakan aplikasi.deb di folder /tmp
+  sudo dpkg -i namapaket.deb
+# Menginstall paket.deb sekaligus
+  sudo dpkg -i *.deb
+ 

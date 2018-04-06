@@ -1,0 +1,41 @@
+#!/bin/bash
+########################################################################3
+#!/bin/bash
+########################################################################3
+# XENTA REMASTERING SCRIPT
+# CREATED   : EKO SAPUTRA (EVSYSTEM)
+# DEV       : XENTA OS http://www.xentaos.org/
+# LICENSE   : GNU GPL 3.0
+# WEBSITE   : https://evsystemsite.wordpress.com
+########################################################################
+
+# Membuat SquashFS dari Hasil Modifikasi pertama kali
+  cd $HOME/livecdtmp/
+  sudo chmod +w extract-cd/casper/filesystem.manifest
+  sudo su
+  sudo chroot edit dpkg-query -W --showformat='${Package} ${Version}\n' > extract-cd/casper/filesystem.manifest
+  exit
+  sudo cp extract-cd/casper/filesystem.manifest extract-cd/casper/filesystem.manifest-desktop
+  sudo sed -i '/ubiquity/d' extract-cd/casper/filesystem.manifest-desktop
+  sudo sed -i '/casper/d' extract-cd/casper/filesystem.manifest-desktop
+  sudo mksquashfs edit extract-cd/casper/filesystem.squashfs
+
+# Mengupdate systemfile.size
+  cd $HOME/livecdtmp/
+  sudo su
+  printf $(du -sx --block-size=1 edit | cut -f1) > extract-cd/casper/filesystem.size
+  exit
+ 
+# Membuat dan mengupdate md5sum CD
+  cd $HOME/livecdtmp/extract-cd
+  sudo rm MD5SUMS
+  find -type f -print0 | sudo xargs -0 md5sum | grep -v isolinux/boot.cat | sudo tee MD5SUMS
+  
+# Membuat ISO File
+  cd $HOME/livecdtmp/
+  sudo mkisofs -r -V "xentaos-1.3-LTS-Evsystem-64" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o../xentaos-1.3-LTS-Evsystem-64.iso extract-cd
+  
+# Mengubah hak akses iso file yang tadi di buat
+  cd $HOME/
+  sudo chmod 777 xentaos-1.3-LTS-Evsystem-64.iso
+  

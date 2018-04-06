@@ -1,0 +1,89 @@
+#!/bin/bash
+########################################################################3
+# XENTA REMASTERING SCRIPT
+# CREATED   : EKO SAPUTRA (EVSYSTEM)
+# DEV       : XENTA OS http://www.xentaos.org/
+# LICENSE   : GNU GPL 3.0
+# WEBSITE   : https://evsystemsite.wordpress.com
+########################################################################
+# Edit Info CD
+  cd $HOME/livecdtmp/extract-cd
+  sudo xed README.diskdefines
+  isi dengan syntax di bawah
+
+define DISKNAME Xenta OS 1.3 "Arok" - Release i386
+#define TYPE binary
+#define TYPEbinary 1
+#define ARCH i386
+#define ARCHi386 1
+#define DISKNUM 1
+#define DISKNUM1 1
+#define TOTALNUM 0
+#define TOTALNUM0 1
+
+# Mengganti grup background
+  rename file menjadi splash.png dan copikan sebagai root user ke folder
+  /home/dindin/livecdtmp/extract-cd/isolinux
+# Edit Isolinux configuration
+  Silahkan buka folder sebagai root user di folder /home/ev/livecdtmp/extract-cd/isolinux
+edit file isolinux.cfg isi dengan syntax di bawah
+
+default vesamenu.c32
+timeout 100
+menu background splash.png
+menu title Welcome to Xenta OS 1.3 XFCE 32-bit
+menu color screen
+MENU COLOR border
+37;40
+#80ffffff #00000000 std
+30;44 #40ffffff #a0000000 std
+MENU COLOR title 1;36;44 #ffffffff #a0000000 std
+MENU COLOR sel 7;37;40 #e0ffffff #20ffffff all
+MENU COLOR unsel 37;44 #50ffffff #a0000000 std
+MENU COLOR help 37;40 #c0ffffff #a0000000 std
+MENU COLOR timeout_msg 37;40 #80ffffff #00000000 std
+MENU COLOR timeout 1;37;40 #c0ffffff #00000000 std
+MENU COLOR msg07 37;40 #90ffffff #a0000000 std
+MENU COLOR tabmsg 31;40 #ffDEDEDE #00000000 std
+MENU HIDDEN
+MENU HIDDENROW 8
+MENU WIDTH 78
+MENU MARGIN 15
+MENU ROWS 7
+MENU VSHIFT 7
+MENU TABMSGROW 11
+MENU CMDLINEROW 11
+MENU HELPMSGROW 16
+MENU HELPMSGENDROW 29
+label live
+menu label Start Xenta OS
+kernel /casper/vmlinuz
+append file=/cdrom/preseed/linuxmint.seed boot=casper initrd=/casper/initrd.lz quiet splash --
+menu default
+label xforcevesa
+menu label Start in compatibility mode
+kernel /casper/vmlinuz
+append file=/cdrom/preseed/linuxmint.seed boot=casper xforcevesa nomodeset b43.blacklist=yes
+initrd=/casper/initrd.lz ramdisk_size=1048576 root=/dev/ram rw noapic noacpi nosplash irqpoll --
+label forcepaeoption
+menu label Start with PAE forced
+kernel /casper/vmlinuz
+append file=/cdrom/preseed/linuxmint.seed boot=casper initrd=/casper/initrd.lz quiet splash -- forcepae
+label oem
+menu label OEM install (for manufacturers)
+kernel /casper/vmlinuz
+append file=/cdrom/preseed/linuxmint.seed oem-config/enable=true only-ubiquity boot=casper initrd=/casper/initrd.lz
+quiet splash --
+label check
+menu label Integrity check
+kernel /casper/vmlinuz
+append boot=casper integrity-check initrd=/casper/initrd.lz quiet splash --
+label memtest
+menu label Memory test
+kernel /casper/memtest
+label local
+menu label Boot from local drive
+COM32 chain.c32
+APPEND hd0
+
+

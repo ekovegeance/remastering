@@ -1,0 +1,83 @@
+#!/bin/bash
+########################################################################3
+# XENTA REMASTERING SCRIPT
+# CREATED   : EKO SAPUTRA (EVSYSTEM)
+# DEV       : XENTA OS http://www.xentaos.org/
+# LICENSE   : GNU GPL 3.0
+# WEBSITE   : https://evsystemsite.wordpress.com
+########################################################################
+
+# Mengganti Nama Distro
+  cd /etc
+  nano issue
+  nano issue.net
+# Mengganti Info Distro
+  cd /etc/xentaos /
+  nano info
+# Mengganti MDM Login Theme
+  /home/nama-user/livecdtmp/edit/
+  /home/nama-user/livecdtmp/edit/usr/share/mdm/themes/
+# Configurasi MDM Themes agar menjadi default
+  /home/nama-user/livecdtmp/edit/usr/share/mdm/
+  edit distro.conf
+[daemon]
+Greeter=/usr/lib/mdm/mdmwebkit
+DefaultSessions=cinnamon.desktop,mate.desktop,xfce.desktop,kde-
+plasma.desktop,kde.desktop,plasma.desktop
+[gui]
+GtkTheme=Xenta-X
+[greeter]
+DefaultFace=/usr/share/pixmaps/faces/user-generic.png
+ConfigAvailable=false
+ChooserButton=false
+ShowGnomeFailsafeSession=false
+ShowXtermFailsafeSession=false
+GraphicalTheme=linuxmint
+GraphicalThemeDir=/usr/share/mdm/themes/
+HTMLTheme=Xenta-X
+SoundOnLogin=true
+SoundOnLoginFile=/usr/share/sounds/linuxmint-gdm.wav
+SoundOnLoginSuccess=true
+SoundOnLoginSuccessFile=/usr/share/sounds/linuxmint-login.wav
+SoundOnLoginFailure=false
+SoundOnLoginFailureFile=/usr/share/sounds/LinuxMint/stereo/dialog-information.ogg
+[debug]
+Enable=false
+
+# Membuat Artwork
+  download Artwork di https://www.cinnamon-look.org/
+  /home/nama-user/livecdtmp/edit/
+  # Icons
+  /home/nama-user/livecdtmp/edit/usr/share/icons/
+  # Themes
+  /home/nama-user/livecdtmp/edit/usr/share/themes/
+  # Wallpaper
+   letakan di desktop
+   mkdir xenta-arok
+   mv nama-walpaper.png
+   nano xentaos-arok.xml
+   copy syntax dibawah
+
+<?xml version="1.0"?>
+<!DOCTYPE wallpapers SYSTEM "cinnamon-wp-list.dtd">
+<wallpapers>
+<wallpaper deleted="false">
+<name>Xenta OS</name>
+<filename>/usr/share/backgrounds/xentaos-arok/xentaos.png</filename>
+<options>zoom</options>
+<shade_type>solid</shade_type>
+<pcolor>#000000</pcolor>
+<scolor>#000000</scolor>
+<artist>Dindin Hernawan</artist>
+</wallpaper>
+</wallpapers>
+
+  # Untuk folder copy ke 
+  /home/nama-user/livecdtmp/edit/usr/share/backgrounds/
+  # Untuk file xml
+  /home/nama-user/livecdtmp/edit/usr/share/cinnamon-background-properties/
+
+
+
+
+

@@ -1,0 +1,15 @@
+#!/bin/bash
+########################################################################
+# XENTA REMASTERING SCRIPT
+# CREATED   : EKO SAPUTRA (EVSYSTEM)
+# DEV       : XENTA OS http://www.xentaos.org/
+# LICENSE   : GNU GPL 3.0
+# WEBSITE   : https://evsystemsite.wordpress.com
+########################################################################
+
+# Periapan Awal adalah memasang perangkat lunak yang nantinya
+# digunakan sebagai perkakas dalam pembuat distro dengan teknik remastering.
+# Perangkat lunak yang di Butuhkan
+# Buka Terminal dan Ketik perintah berikut :
+
+sudo apt-get install squashfs-tools genisoimage resolvconf rsync

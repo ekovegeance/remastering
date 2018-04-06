@@ -1,0 +1,252 @@
+#!/usr/bin/env bash
+
+# evhrc - a CLI Bash script to show system/theme info in screenshots
+
+# Copyright (c) 2018 Eko Saputra <evsystem@dev.xentaos.org>
+#               2010-2017 Brett Bohnenkamper <kittykatt@kittykatt.us>
+
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Yes, I do realize some of this is horribly ugly coding. Any ideas/suggestions would be
+# appreciated by emailing me or by stopping by http://github.com/ekovegeance/screenFetch. You
+# could also drop in on the IRC channel at irc://irc.rizon.net/screenFetch.
+# to put forth suggestions/ideas. Thank you.
+
+# Requires: bash 4.0+
+# Optional dependencies: xorg-xdpyinfo (resoluton detection)
+#                        scrot (screenshot taking)
+#                        curl (screenshot uploading)
+
+LANG=C
+LANGUAGE=C
+LC_ALL=C
+
+scriptVersion="3.7.0"
+
+
+#################################
+#           WARNA EV            #
+#           Version 1.0         #
+#################################
+
+
+#WARNA KESUKAAN
+
+cyan='\e[0;36m'
+green='\e[0;34m'
+okegreen='\033[92m'
+lightgreen='\e[1;32m'
+white='\e[1;37m'
+red='\e[1;31m'
+yellow='\e[0;33m'
+BlueF='\e[1;34m' #Biru
+RESET="\033[00m" #normal
+orange='\e[38;5;166m'
+Black='\033[0m\033[30m'
+
+##################################
+#             cover              #
+##################################
+
+
+#THEME
+resize -s 70 90 > /dev/null
+clear
+echo -e $BlueF"  _______________________________      _________________________            "
+echo " |                               \    /  ______________________/SYSTEM|          "
+echo " |     __________________________/   /  /              "
+echo " |    |             ____            /  /                   "
+echo " |    |___________  \   \          /  /                "
+echo " |                \  \   \        /  /  Developer Xenta OS |evsystem@dev.xentaos.org              "
+echo -e $white" |     ___________/   \   \      /  /  ______________________________________________                "
+echo " |    |                \   \    /  /   Email   : ekovegeance7@gmail.com                 "
+echo " |    |                 \   \  /  /    Github  : @ekovegeance             "
+echo " |    |______            \   \/  /     Website : evsystemsite.wordpress.com                "
+echo " |           \            \     /      Partner : Xenta OS | IndoXploit | Cnes Group            "
+echo " |___________/             \___/                                                       "
+echo "                                                                                             "
+echo -e $lightgreen"               ----------+[ ALAM TAKAMBANG JADI GURU]+--------------                                                         "
+echo ""
+echo -e $red
+echo -n "tekan ENTER untuk melanjutkan .............."
+read warning
+echo -e $lightgreen
+
+
+#some variables
+DEFAULT_ROUTE=$(ip route show default | awk '/default/ {print $3}')
+IFACE=$(ip route show | awk '(NR == 2) {print $3}')
+JAVA_VERSION=`java -version 2>&1 |awk 'NR==1{ gsub(/"/,""); print $3 }'`
+MYIP=$(ip route show | awk '(NR == 2) {print $9}')
+
+#### Install Paket
+function Installsquashfs-tools {
+	echo -e "\e[1;31mMempersiapkan Package yang akan di Install ""!\e[0m"
+	echo -e ""
+	echo -e "Mulai Menginstall ? (Y/N)"
+	read install
+	if [[ $install = Y || $install = y ]] ; then
+		echo -e "\e[31m[+] Installing squashfs-tools!\e[0m"
+		sudo apt-get install squashfs-tools
+		echo -e "\e[32m[-] Done Installing squashfs-tools!\e[0m"
+	else
+		echo -e "\e[32m[-] Ok,Sampai Jumpa !\e[0m"
+	fi
+}
+
+
+######## Persiapan
+function Persiapan {
+clear
+echo -e "
+\033[31m#######################################################\033[m
+                        Install Tools
+         Pertama kali harus menginstall tools untuk remastering       
+\033[31m#######################################################\033[m"
+select menusel in "Install squashfs-tools" "Install All" "Back to Main"; do
+case $menusel in
+	"Install squashfs-tools")
+		Installsquashfs-tools
+		pause
+		softwaresandystemtools ;;
+
+	"Back to Main")
+		clear
+		mainmenu ;;
+
+	*)
+		screwup
+		softwaresandystemtools ;;
+
+
+esac
+
+break
+
+done
+}
+######## Langkah kedua
+function LangkahKedua {
+clear
+echo -e "
+\033[31m#######################################################\033[m
+          Mendownload Sistem Operasi yang akan di remastering
+          
+          www.xentaos.org
+                           
+\033[31m#######################################################\033[m"
+select menusel in  "Back to Main"; do
+case $menusel in
+	"LangkahKedua")
+		
+		pause
+		softwaresandystemtools ;;
+
+	"Back to Main")
+		clear
+		mainmenu ;;
+
+	*)
+		screwup
+		softwaresandystemtools ;;
+
+
+esac
+
+break
+
+done
+}
+
+
+
+
+
+
+#### pause function
+function pause(){
+   read -sn 1 -p "Press any key to continue..."
+}
+########################################################
+##             Main Menu Section
+########################################################
+function mainmenu {
+echo -e "
+\033[32m################################################################################\033[m
+\033[1;36m
+|                                                                              |
+|                          I love Security and Haking.                         |
+|______________________________________________________________________________|
+|                                                                              |
+|                                                                              |
+|                                                                              |
+|                 User Name:          [   evsystem    ]                        |
+|                                                                              |
+|                 Password:           [               ]                        |
+|                                                                              |
+|    My facebook: Eko Saputra                                                  |
+|                                                                              |
+|    My Github  :@ekovegeance                                                  |
+|                                                                              |
+|    My website: evsystemsite.wordpress.com                                    |
+|                                   [ OK ]                                     |
+|______________________________________________________________________________|
+\033[m
+                  	    Powered by CNES GROUP
+                     	    Version : 5.0 \033[32m$version\033[m
+Script Location : \033[32m$0\033[m
+Connection Info :-----------------------------------------------
+  Gateway: \033[32m$DEFAULT_ROUTE\033[m Interface: \033[32m$IFACE\033[m My LAN Ip: \033[32m$MYIP\033[m
+\033[32m###############################################################################\033[m"
+
+select menusel in "Persiapan" "Langkah Kedua" "Install WebAPP Hacking Lab" "Update tools to latest version" "Must View" "EXIT PROGRAM"; do
+case $menusel in
+
+	"Persiapan")
+		Persiapan
+		clear ;;
+
+	"Langkah Kedua")
+		LangkahKedua
+		clear ;;
+	"Install WebAPP Hacking Lab")
+		WebAppLab
+		clear ;;
+
+	"Update tools to latest version")
+		updatetools
+		clear ;;
+
+	"Must View")
+		firefox https://www.facebook.com/eko.vegeance.1
+		firefox https://github.com/ekovegeance
+		firefox http://evsystemsite.wordpress.com
+		pause
+		clear ;;
+
+	"EXIT PROGRAM")
+           zenity --info --text "Thanks for Using remastering-cli :  @ekovegeance -main developer of remastering-cli"
+		clear && exit 0 ;;
+
+	* )
+		screwup
+		clear ;;
+esac
+
+break
+
+done
+}
+
+while true; do mainmenu; done

@@ -1,0 +1,22 @@
+#!/bin/bash
+########################################################################3
+# XENTA REMASTERING SCRIPT
+# CREATED   : EKO SAPUTRA (EVSYSTEM)
+# DEV       : XENTA OS http://www.xentaos.org/
+# LICENSE   : GNU GPL 3.0
+# WEBSITE   : https://evsystemsite.wordpress.com
+########################################################################
+
+# Membersihkan Cache Apt
+  apt-get clean
+# Membersihan dependecis yang tak terpakai
+  apt-get autoremove
+# Membersihan Bash History
+  rm -rf /tmp/* ~/.bash_history
+# Unmount proc sys devpts exit 
+  umount /proc
+  umount /sys
+  umount /dev/pts
+  exit
+  sudo umount edit/dev
+  sudo umount mnt
